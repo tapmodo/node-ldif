@@ -109,6 +109,92 @@ console.log(LDIF.parse(input));
 }
 ```
 
+That's a lot. But it's most descriptive of the file format. You can
+throw it into some lodash, or map and reduce it as you please.
+Some tooling like that will be added to this package soon.
+
+As you will see next, parsing an LDIF "changes" formatted file
+results in differently structured output. For now you're going to
+have to do your own experimentation, as some of the output below
+has been removed for brevity
+
+##### Parsing LDIF changes [example6.ldif](https://github.com/tapmodo/node-ldif/blob/master/rfc/example6.ldif)
+
+```json
+{
+  "version": 1,
+  "type": "changes",
+  "changes": [
+    {
+      "dn": "cn=Fiona Jensen, ou=Marketing, dc=airius, dc=com",
+      "control": null,
+      "changes": {
+        "type": "add",
+        "attributes": [
+          {
+            "attribute": "objectclass",
+            "value": "top"
+          },
+          {
+            "attribute": "objectclass",
+            "value": "person"
+          },
+          {
+            "attribute": "cn",
+            "value": "Fiona Jensen"
+          },
+          {
+            "attribute": "sn",
+            "value": "Jensen"
+          }
+        ]
+      }
+    },
+    {
+      "dn": "cn=Robert Jensen, ou=Marketing, dc=airius, dc=com",
+      "control": null,
+      "changes": {
+        "type": "delete"
+      }
+    },
+    {
+      "dn": "cn=Paul Jensen, ou=Product Development, dc=airius, dc=com",
+      "changes": {
+        "type": "modrdn",
+        "newrdn": "cn=Paula Jensen"
+      }
+    },
+    {
+      "dn": "cn=Paula Jensen, ou=Product Development, dc=airius, dc=com",
+      "changes": {
+        "type": "modify",
+        "changes": [
+          {
+            "type": "add",
+            "attribute": "postaladdress",
+            "values": [
+              "123 Anystreet $ Sunnyvale, CA $ 94086"
+            ]
+          },
+          {
+            "type": "delete",
+            "attribute": "description"
+          },
+          {
+            "type": "replace",
+            "attribute": "telephonenumber",
+            "values": [
+              "+1 408 555 1234",
+              "+1 408 555 5678"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
+```
+
 ## Implementation Notes
 
   * An attempt has been made to closely model RFC2849  

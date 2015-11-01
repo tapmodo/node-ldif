@@ -1,5 +1,5 @@
 # node-ldif
-#### Nodejs LDIF (LDAP Data Interchange Format) parser based on [RFC2849](https://github.com/tapmodo/node-ldif/docs/rfc2849.md)
+#### Nodejs LDIF (LDAP Data Interchange Format) parser based on [RFC2849](https://github.com/tapmodo/node-ldif/blob/master/docs/rfc2849.md)
 
 ## Installation
 

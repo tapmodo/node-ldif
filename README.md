@@ -4,7 +4,8 @@
 Unless you are an LDAP aficionado you may not know about the LDIF format.
 I was surprised to learn that no LDIF parsing library existed for node.
 
-So I wrote one, with [peg.js](http://pegjs.org).  
+So I wrote one, with [peg.js](http://pegjs.org). It aims to be RFC-compliant.
+
 Now I'll never have to use that cursed perl script again!
 
 ## Installation

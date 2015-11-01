@@ -9,7 +9,7 @@ Now I'll never have to use that cursed perl script again!
 
 ## Installation
 
-Install with **npm**:
+Install easily with **npm**!
 
     npm install ldif
 
@@ -24,7 +24,7 @@ var input = fs.readFileSync('./rfc/example1.ldif','utf8');
 console.log(LDIF.parse(input));
 ```
 
-##### Current object output
+##### Current object output for [example1.ldif](https://github.com/tapmodo/node-ldif/blob/master/rfc/example1.ldif)
 
 ```json
 {

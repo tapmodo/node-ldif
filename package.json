@@ -10,7 +10,7 @@
   },
   "scripts": {
     "build": "pegjs lib/ldif.pegjs lib/parser.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node_modules/.bin/mocha"
   },
   "author": "Tapmodo <khallman@tapmodo.com>",
   "license": "MIT"

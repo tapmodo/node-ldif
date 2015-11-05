@@ -7,19 +7,6 @@ I was surprised to learn that no LDIF parsing library existed for node.
 So I wrote one, with [peg.js](http://pegjs.org). It aims to be RFC-compliant.  
 Now I'll never have to use that cursed perl script again!
 
-## Theory
-
-RFC2849 defines a somewhat complex format that can specify
-*either* a series of LDAP records, or a series of changes to
-LDAP records. There are other nuances that make it difficult to
-parse using a lot of hand-written conditionals, such as values
-that can span multiple lines, options on attribute values that
-may be present, or be repeating, and so on.
-
-A simple hand-made parser could be written for the most common
-and simple use-cases, but this library aims to parse (and write)
-the entire range of LDIF possible.
-
 ### Design Goals
 
   * 100% RFC-compliance; should comprehend any valid LDIF file
@@ -48,8 +35,8 @@ var ldif = require('ldif'),
 console.log(ldif.parse(input));
 ```
 
-After reading the file, it's parsed as a string. There's also a
-shorthand to read in a file (synchronously, as above).:
+After reading the file, it's parsed as a string.  
+There's also a shorthand to read in a file (synchronously, as above):
 
 ##### File parsing shorthand
 ```javascript
@@ -57,15 +44,15 @@ var ldif = require('ldif');
 console.log(ldif.parseFile('./rfc/example1.ldif'));
 ```
 
-Both of these return an object format for an entire LDIF file.  
-In this case, example1.ldif specifies contents  of two LDAP records.
+Parsing an LDIF file returns an object format for an entire LDIF file.  
+In this case, example1.ldif specifies contents of two LDAP records.
 
 ##### Shifting records from parsed file
 ```javascript
 var ldif = require('ldif');
     file = ldif.parseFile('./rfc/example1.ldif');
 
-console.log(file.shift());
+var record = file.shift();
 ```
 
 Records are stored in an internal format, using classic
@@ -77,11 +64,36 @@ specific constructor types:
 var ldif = require('ldif');
     file = ldif.parseFile('./rfc/example1.ldif');
 
-console.log(file instanceof ldif.Container);        //true
-console.log(file.shift() instanceof ldif.Record);   //true
+(file instanceof ldif.Container)        === true
+(file.shift() instanceof ldif.Record)   === true
 ```
 
 ### Converting
+
+##### File data to plain object
+
+```javascript
+var ldif = require('ldif');
+    file = ldif.parseFile('./rfc/example1.ldif'),
+    output_options = {};
+
+console.log(file.toObject(output_options));
+```
+
+Returns the following result:
+
+```javascript
+{ type: 'content',
+  version: 1,
+  entries: 
+   [ { dn: 'cn=Barbara Jensen, ou=Product Development, dc=airius, dc=com',
+       attributes: [Object] },
+     { dn: 'cn=Bjorn Jensen, ou=Accounting, dc=airius, dc=com',
+       attributes: [Object] } ] }
+```
+
+Again, this is for the entire file. It's more common you'd want
+to operate on individual records:
 
 ##### Record to plain object
 ```javascript
@@ -116,7 +128,13 @@ the benavior. For now that is left as an exercise for the reader.
 If you want a hint, look in the source for `Record.defaults` and
 how those settings interact.
 
+**Important note:** The `toObject()` methods are not currently
+implemented for *change* format files or entries.
+
 ##### Outputting LDIF for parsed files
+
+All parsed data can be written back to LDIF format using a
+`toLDIF()` method (on files or entries).
 
 ```javascript
 var ldif = require('ldif');
@@ -129,15 +147,11 @@ console.log(file.toLDIF());
 console.log(file.shift().toLDIF());
 ```
 
-### Note on changes schema
-
-  * For now, managing changes schema records are up to you
-  * `toLDIF()` output is apparently identical, that should be enough
-
 ### TODO
 
-  * Streaming read interface (coming soon--probably as a seperate package))
-  * Construct and alter objects
+  * toObject() methods for change schema and entries
+  * Streaming read interface (coming soon--probably as a seperate package)
+  * Construct and alter objects through code
   * More complete documentation
   * Test suite
 

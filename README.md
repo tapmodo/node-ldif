@@ -16,7 +16,7 @@ Install easily with **npm**!
 ## LDIF Format
 
 RFC2849 defines a somewhat complex format that can specify
-**either** a series of LDAP records, or a series of changes to
+*either* a series of LDAP records, or a series of changes to
 LDAP records. There are other nuances that make it difficult to
 parse using a lot of hand-written conditionals, such as values
 that can span multiple lines, options on attribute values that
@@ -106,10 +106,15 @@ Output of the above code is this:
      description: 'A big sailing fan.' } }
 ```
 
-Notice that the default behavior is to output an attributes key that
-containts each attribute name as a key, and either an array or string
-value. Since an attribute can be single- or multi-valued, this format
-makes sense in most cases.
+Notice the default behavior outputs attribute key/value pairs
+that have values of either an array or single string. Since an
+attribute can be single- or multi-valued, this format makes
+sense in most cases.
+
+There is a way to pass an options object to this method and alter
+the benavior. For now that is left as an exercise for the reader.
+If you want a hint, look in the source for `Record.defaults` and
+how those settings interact.
 
 ##### Outputting LDIF for parsed files
 
@@ -123,6 +128,11 @@ console.log(file.toLDIF());
 // or just a single record
 console.log(file.shift().toLDIF());
 ```
+
+## Note on changes schema
+
+  * For now, managing changes schema records are up to you
+  * `toLDIF()` output is apparently identical, that should be enough
 
 ### TODO
 

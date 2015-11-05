@@ -6,11 +6,17 @@
  */
 
 var fs = require('fs');
+var type = require('./lib/record');
 
 module.exports = {
   parseFile: function(filename){
     return this.parse(fs.readFileSync(filename,'utf8'));
   },
   parse: require('./lib/parser').parse,
-  type: require('./lib/record')
+  Container: type.Container,
+  Record: type.Record,
+  Change: type.Change,
+  Attribute: type.Attribute,
+  Value: type.Value,
+  Modification: type.Modifcation
 };

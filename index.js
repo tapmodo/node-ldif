@@ -5,7 +5,12 @@
  * @license MIT
  */
 
+var fs = require('fs');
+
 module.exports = {
+  parseFile: function(filename){
+    return this.parse(fs.readFileSync(filename,'utf8'));
+  },
   parse: require('./lib/parser').parse,
-  type: require('./lib/types')
+  type: require('./lib/record')
 };

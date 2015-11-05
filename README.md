@@ -7,13 +7,7 @@ I was surprised to learn that no LDIF parsing library existed for node.
 So I wrote one, with [peg.js](http://pegjs.org). It aims to be RFC-compliant.  
 Now I'll never have to use that cursed perl script again!
 
-## Installation
-
-Install easily with **npm**!
-
-    npm install ldif
-
-## LDIF Format
+## Theory
 
 RFC2849 defines a somewhat complex format that can specify
 *either* a series of LDAP records, or a series of changes to
@@ -26,7 +20,7 @@ A simple hand-made parser could be written for the most common
 and simple use-cases, but this library aims to parse (and write)
 the entire range of LDIF possible.
 
-## Design Goals
+### Design Goals
 
   * 100% RFC-compliance; should comprehend any valid LDIF file
   * Parsed records stored internally intact
@@ -36,6 +30,12 @@ the entire range of LDIF possible.
   * No external library dependencies; pure Node Javascript
 
 ## Usage
+
+### Installation
+
+Install easily with *npm*!
+
+    npm install ldif
 
 ### Parsing
 
@@ -57,8 +57,8 @@ var ldif = require('ldif');
 console.log(ldif.parseFile('./rfc/example1.ldif'));
 ```
 
-Both of these return an object format for an entire LDIF file.
-In this case, example1.ldif specifies the contents of two LDAP records.
+Both of these return an object format for an entire LDIF file.  
+In this case, example1.ldif specifies contents  of two LDAP records.
 
 ##### Shifting records from parsed file
 ```javascript
@@ -129,7 +129,7 @@ console.log(file.toLDIF());
 console.log(file.shift().toLDIF());
 ```
 
-## Note on changes schema
+### Note on changes schema
 
   * For now, managing changes schema records are up to you
   * `toLDIF()` output is apparently identical, that should be enough

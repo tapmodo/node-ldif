@@ -13,202 +13,121 @@ Install easily with **npm**!
 
     npm install ldif
 
+## LDIF Format
+
+RFC2849 defines a somewhat complex format that can specify
+**either** a series of LDAP records, or a series of changes to
+LDAP records. There are other nuances that make it difficult to
+parse using a lot of hand-written conditionals, such as values
+that can span multiple lines, options on attribute values that
+may be present, or be repeating, and so on.
+
+A simple hand-made parser could be written for the most common
+and simple use-cases, but this library aims to parse (and write)
+the entire range of LDIF possible.
+
+## Design Goals
+
+  * 100% RFC-compliance; should comprehend any valid LDIF file
+  * Parsed records stored internally intact
+  * Methods are provided to extract record data in various formats
+  * Outputs exactly compatilble LDIF for any parsed record or file
+  * Automatic decoding and outputting of base64 data
+  * No external library dependencies; pure Node Javascript
+
 ## Usage
 
-##### Parse an LDIF file
+### Parsing
+
+##### Parsing strings
 ```javascript
-var LDIF = require('ldif');
-var fs = require('fs');
-var input = fs.readFileSync('./rfc/example1.ldif','utf8');
+var ldif = require('ldif'),
+    file = './rfc/example1.ldif',
+    input = require('fs').readFileSync(file,'utf8');
 
-console.log(LDIF.parse(input));
+console.log(ldif.parse(input));
 ```
 
-##### Current object output for [example1.ldif](https://github.com/tapmodo/node-ldif/blob/master/rfc/example1.ldif)
+After reading the file, it's parsed as a string. There's also a
+shorthand to read in a file (synchronously, as above).:
 
-```json
-{
-  "version": 1,
-  "type": "content",
-  "entries": [
-    {
-      "dn": "cn=Barbara Jensen, ou=Product Development, dc=airius, dc=com",
-      "attributes": [
-        {
-          "attribute": "objectclass",
-          "value": "top"
-        },
-        {
-          "attribute": "objectclass",
-          "value": "person"
-        },
-        {
-          "attribute": "objectclass",
-          "value": "organizationalPerson"
-        },
-        {
-          "attribute": "cn",
-          "value": "Barbara Jensen"
-        },
-        {
-          "attribute": "cn",
-          "value": "Barbara J Jensen"
-        },
-        {
-          "attribute": "cn",
-          "value": "Babs Jensen"
-        },
-        {
-          "attribute": "sn",
-          "value": "Jensen"
-        },
-        {
-          "attribute": "uid",
-          "value": "bjensen"
-        },
-        {
-          "attribute": "telephonenumber",
-          "value": "+1 408 555 1212"
-        },
-        {
-          "attribute": "description",
-          "value": "A big sailing fan."
-        }
-      ]
-    },
-    {
-      "dn": "cn=Bjorn Jensen, ou=Accounting, dc=airius, dc=com",
-      "attributes": [
-        {
-          "attribute": "objectclass",
-          "value": "top"
-        },
-        {
-          "attribute": "objectclass",
-          "value": "person"
-        },
-        {
-          "attribute": "objectclass",
-          "value": "organizationalPerson"
-        },
-        {
-          "attribute": "cn",
-          "value": "Bjorn Jensen"
-        },
-        {
-          "attribute": "sn",
-          "value": "Jensen"
-        },
-        {
-          "attribute": "telephonenumber",
-          "value": "+1 408 555 1212"
-        }
-      ]
-    }
-  ]
-}
+##### File parsing shorthand
+```javascript
+var ldif = require('ldif');
+console.log(ldif.parseFile('./rfc/example1.ldif'));
 ```
 
-That's a lot. But it's most descriptive of the file format. You can
-throw it into some lodash, or map and reduce it as you please.
-Some tooling like that will be added to this package soon.
+Both of these return an object format for an entire LDIF file.
+In this case, example1.ldif specifies the contents of two LDAP records.
 
-As you will see next, parsing an LDIF "changes" formatted file
-results in differently structured output. For now you're going to
-have to do your own experimentation, as some of the output below
-has been removed for brevity
+##### Shifting records from parsed file
+```javascript
+var ldif = require('ldif');
+    file = ldif.parseFile('./rfc/example1.ldif');
 
-##### Parsing LDIF changes [example6.ldif](https://github.com/tapmodo/node-ldif/blob/master/rfc/example6.ldif)
-
-```json
-{
-  "version": 1,
-  "type": "changes",
-  "changes": [
-    {
-      "dn": "cn=Fiona Jensen, ou=Marketing, dc=airius, dc=com",
-      "control": null,
-      "changes": {
-        "type": "add",
-        "attributes": [
-          {
-            "attribute": "objectclass",
-            "value": "top"
-          },
-          {
-            "attribute": "objectclass",
-            "value": "person"
-          },
-          {
-            "attribute": "cn",
-            "value": "Fiona Jensen"
-          },
-          {
-            "attribute": "sn",
-            "value": "Jensen"
-          }
-        ]
-      }
-    },
-    {
-      "dn": "cn=Robert Jensen, ou=Marketing, dc=airius, dc=com",
-      "control": null,
-      "changes": {
-        "type": "delete"
-      }
-    },
-    {
-      "dn": "cn=Paul Jensen, ou=Product Development, dc=airius, dc=com",
-      "changes": {
-        "type": "modrdn",
-        "newrdn": "cn=Paula Jensen"
-      }
-    },
-    {
-      "dn": "cn=Paula Jensen, ou=Product Development, dc=airius, dc=com",
-      "changes": {
-        "type": "modify",
-        "changes": [
-          {
-            "type": "add",
-            "attribute": "postaladdress",
-            "values": [
-              "123 Anystreet $ Sunnyvale, CA $ 94086"
-            ]
-          },
-          {
-            "type": "delete",
-            "attribute": "description"
-          },
-          {
-            "type": "replace",
-            "attribute": "telephonenumber",
-            "values": [
-              "+1 408 555 1234",
-              "+1 408 555 5678"
-            ]
-          }
-        ]
-      }
-    }
-  ]
-}
+console.log(file.shift());
 ```
 
-## Implementation Notes
+Records are stored in an internal format, using classic
+Javascript **objects**. The type or value specified in a `type`
+property for all objects, but they can also be tested for
+specific constructor types:
 
-  * An attempt has been made to closely model RFC2849  
-    (If you find any problems, file an issue!)
-  * Supports both "content" and "change" file schemas
-  * Able to parse all LDIF examples from RFC spec
-  * Currently only returns plain object structure  
-    This will change! (see first "TODO")
+```javascript
+var ldif = require('ldif');
+    file = ldif.parseFile('./rfc/example1.ldif');
+
+console.log(file instanceof ldif.Container);        //true
+console.log(file.shift() instanceof ldif.Record);   //true
+```
+
+### Converting
+
+##### Record to plain object
+```javascript
+var ldif = require('ldif');
+    file = ldif.parseFile('./rfc/example1.ldif'),
+    output_options = {};
+
+var record = file.shift();
+console.log(record.toObject(output_options));
+```
+
+Output of the above code is this:
+
+```
+{ dn: 'cn=Barbara Jensen, ou=Product Development, dc=airius, dc=com',
+  attributes: 
+   { objectclass: [ 'top', 'person', 'organizationalPerson' ],
+     cn: [ 'Barbara Jensen', 'Barbara J Jensen', 'Babs Jensen' ],
+     sn: 'Jensen',
+     uid: 'bjensen',
+     telephonenumber: '+1 408 555 1212',
+     description: 'A big sailing fan.' } }
+```
+
+Notice that the default behavior is to output an attributes key that
+containts each attribute name as a key, and either an array or string
+value. Since an attribute can be single- or multi-valued, this format
+makes sense in most cases.
+
+##### Outputting LDIF for parsed files
+
+```javascript
+var ldif = require('ldif');
+    file = ldif.parseFile('./rfc/example1.ldif');
+
+// the whole file
+console.log(file.toLDIF());
+
+// or just a single record
+console.log(file.shift().toLDIF());
+```
 
 ### TODO
 
-  * Cast parsed values as defined objects
-  * Ability to output LDIF format e.g. toString()
-  * Streaming read interface (coming soon)
+  * Streaming read interface (coming soon--probably as a seperate package))
+  * Construct and alter objects
   * More complete documentation
   * Test suite
 

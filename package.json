@@ -1,6 +1,6 @@
 {
   "name": "ldif",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "LDIF (LDAP Directory Interchange Format) tools for Node",
   "main": "index.js",
   "dependencies": {},

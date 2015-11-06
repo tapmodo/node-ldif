@@ -123,13 +123,15 @@ that have values of either an array or single string. Since an
 attribute can be single- or multi-valued, this format makes
 sense in most cases.
 
-There is a way to pass an options object to this method and alter
-the benavior. For now that is left as an exercise for the reader.
-If you want a hint, look in the source for `Record.defaults` and
-how those settings interact.
+##### toObject(options)
 
-**Important note:** The `toObject()` methods are not currently
-implemented for *change* format files or entries.
+Option | Type | Description | Deafult
+------ | ---- | ----------- | ----------
+flatten | boolean | Flatten single values into strings | true
+single | boolean | Overrides flatten, only returns single values | false
+decode | boolean | Decode values (not yet well-defined, leave true) | true
+preserveOptions | boolean | Outputs any attribute options | true
+preferOptions | array | Prefer these options when `preserveOptions` is false | []
 
 ##### Outputting LDIF for parsed files
 

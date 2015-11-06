@@ -128,9 +128,8 @@ console.log(file.shift().toLDIF());
 
 ### TODO
 
-  * toObject() methods for change schema and entries
   * Streaming read interface (coming soon--probably as a seperate package)
-  * Construct and alter objects through code
+  * Construct and alter objects through code (document this)
   * More complete documentation
   * Test suite
 

@@ -2,9 +2,9 @@
 #### Nodejs LDIF (LDAP Data Interchange Format) parser based on [RFC2849](https://github.com/tapmodo/node-ldif/tree/master/rfc)
 
 Unless you are an LDAP aficionado you may not know about the LDIF format.
-I was surprised to learn that no LDIF parsing library existed for node.
+I was surprised to learn that no LDIF parsing library existed for node.  
+So I wrote one, with [peg.js](http://pegjs.org).
 
-So I wrote one, with [peg.js](http://pegjs.org). It aims to be RFC-compliant.  
 Now I'll never have to use that cursed perl script again!
 
 ### Design Goals
@@ -70,31 +70,6 @@ var ldif = require('ldif');
 
 ### Converting
 
-##### File data to plain object
-
-```javascript
-var ldif = require('ldif');
-    file = ldif.parseFile('./rfc/example1.ldif'),
-    output_options = {};
-
-console.log(file.toObject(output_options));
-```
-
-Returns the following result:
-
-```javascript
-{ type: 'content',
-  version: 1,
-  entries: 
-   [ { dn: 'cn=Barbara Jensen, ou=Product Development, dc=airius, dc=com',
-       attributes: [Object] },
-     { dn: 'cn=Bjorn Jensen, ou=Accounting, dc=airius, dc=com',
-       attributes: [Object] } ] }
-```
-
-Again, this is for the entire file. It's more common you'd want
-to operate on individual records:
-
 ##### Record to plain object
 ```javascript
 var ldif = require('ldif');
@@ -107,7 +82,7 @@ console.log(record.toObject(output_options));
 
 Output of the above code is this:
 
-```
+```javascript
 { dn: 'cn=Barbara Jensen, ou=Product Development, dc=airius, dc=com',
   attributes: 
    { objectclass: [ 'top', 'person', 'organizationalPerson' ],
@@ -125,13 +100,15 @@ sense in most cases.
 
 ##### toObject(options)
 
+The behavior of `toObject()` can be altered with options below.
+
 Option | Type | Description | Deafult
 ------ | ---- | ----------- | ----------
 flatten | boolean | Flatten single values into strings | true
 single | boolean | Overrides flatten, only returns single values | false
 decode | boolean | Decode values (not yet well-defined, leave true) | true
 preserveOptions | boolean | Outputs any attribute options | true
-preferOptions | array | Prefer these options when `preserveOptions` is false | []
+preferOptions | array | Prefer these options when `preserveOptions` is false | [ ]
 
 ##### Outputting LDIF for parsed files
 

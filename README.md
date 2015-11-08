@@ -126,6 +126,15 @@ console.log(file.toLDIF());
 console.log(file.shift().toLDIF());
 ```
 
+**Note:** `toLDIF()` method folds lines by default at 78 characters.
+If you want to change this value call `toLDIF(width)` where *width*
+is an integer.
+
+### Test suite
+
+To run the test suite, use `npm test` (you'll need the dev dependencies
+of *mocha* and *chai* installed).
+
 ### TODO
 
   * Streaming read interface (coming soon--probably as a seperate package)

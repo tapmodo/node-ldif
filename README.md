@@ -57,7 +57,7 @@ var record = file.shift();
 ```
 
 Records are stored in an internal format, using classic
-Javascript **objects**. The type or value specified in a `type`
+*Javascript objects*. The type or value specified in a `type`
 property for all objects, but they can also be tested for
 specific constructor types:
 
@@ -131,10 +131,15 @@ console.log(file.shift().toLDIF());
 If you want to change this value call `toLDIF(width)` where *width*
 is an integer.
 
-### Test suite
+## Tests
 
 To run the test suite, use `npm test` (you'll need the dev dependencies
 of *mocha* and *chai* installed).
+
+## Rebuild parser
+
+To modify the parser, edit `lib/ldif.pegjs` and run `npm run make`
+(this requires the *pegjs* dev dependency to be installed).
 
 ### TODO
 

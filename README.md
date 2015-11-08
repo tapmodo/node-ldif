@@ -140,5 +140,4 @@ of *mocha* and *chai* installed).
   * Streaming read interface (coming soon--probably as a seperate package)
   * Construct and alter objects through code (document this)
   * More complete documentation
-  * Test suite
 

@@ -15,6 +15,7 @@ Now I'll never have to use that cursed perl script again!
   * Outputs exactly compatilble LDIF for any parsed record or file
   * Automatic decoding and outputting of base64 data
   * No external library dependencies; pure Node Javascript
+  * Includes complete test suite
 
 ## Usage
 

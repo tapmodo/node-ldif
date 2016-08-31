@@ -45,6 +45,20 @@ describe('Basic parsing',function(){
     done();
   });
 
+  it('whitespace after version line',function(done){
+    // This is a fix for Issue #1 on github
+    var parsed = ldif.parse(
+      'version: 1\n' +
+      '\n' +    // <-- commenting out this line makes it work again
+      'dn: dc=test\n' +
+      'dc: test\n'
+    );
+    parsed.should.have.property('type').and.equal('content');
+    parsed.should.have.property('version').and.equal(1);
+    parsed.should.have.property('entries').and.have.length(1);
+    done();
+  });
+
 });
 describe('Records',function(){
 

@@ -68,16 +68,40 @@ describe('Parses RFC Examples', function () {
     done();
   });
 
+  it('parse example8', function (done) {
+    var out = ldif.parseFile('./rfc/example8.ldif');
+    out.should.be.instanceof(ldif.Container);
+    out.type.should.be.equal('content');
+    ex.push(out);
+    done();
+  });
+
+  it('parse example9', function (done) {
+    var out = ldif.parseFile('./rfc/example9.ldif');
+    out.should.be.instanceof(ldif.Container);
+    out.type.should.be.equal('content');
+    ex.push(out);
+    done();
+  });
+
+
+  it('parse example10', function (done) {
+    var out = ldif.parseFile('./rfc/example10.ldif');
+    out.should.be.instanceof(ldif.Container);
+    out.type.should.be.equal('content');
+    ex.push(out);
+    done();
+  });
+
 });
 
 describe('Test RFC Examples', function () {
   it('test example0', function (done) {
-    //this.timeout(0);
     var out = ex[0];
     out.should.have.property('entries');
     out.entries.should.be.length(1);
     out.shift().toObject().should.be.deep.equal({
-      "dn": " ",
+      "dn": "",
       "attributes": {
         "objectclass": [
           "top",
@@ -238,4 +262,49 @@ describe('Test RFC Examples', function () {
   it('test example6');
   it('test example7');
 
+  it('test example8', function (done) {
+    var out = ex[8];
+    out.should.have.property('entries');
+    out.entries.should.be.length(1);
+    out.shift().toObject().should.be.deep.equal({
+      "dn": "cn=testRoLetterș",
+      "attributes": {
+        "objectclass": "person",
+        "cn": "testRoLetterș",
+        "sn": "RoLetterș",
+        "description": "All special Ro letters: ÂăÎîȘșȚț"
+      }
+    });
+    done();
+  });
+
+  it('test example9', function (done) {
+    var out = ex[9];
+    out.should.have.property('entries');
+    out.entries.should.be.length(1);
+    out.shift().toObject().should.be.deep.equal({
+      "dn": "cn=testDeLetterß",
+      "attributes": {
+        "objectclass": "person",
+        "cn": "testRoLetterß",
+        "sn": "RoLetterß",
+        "description": "All special Ro letters: äÄöÖüÜß"
+      }
+    });
+    done();
+  });
+
+  it('test example10', function (done) {
+    var out = ex[10];
+    out.should.have.property('entries');
+    out.entries.should.be.length(1);
+    out.shift().toObject().should.be.deep.equal({
+      "dn": "cn=manfred,ou=people,o=panzerknackerag",
+      "attributes": {
+        "street": "Steegerstrasse 17",
+        "crypto": "{\"key\":\"Its magic, joel\"}",
+      }
+    });
+    done();
+  });
 });

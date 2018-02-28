@@ -1,0 +1,5 @@
+dn: cn=testDeLetterß
+objectclass: person
+cn: testRoLetterß
+sn: RoLetterß
+description: All special Ro letters: äÄöÖüÜß

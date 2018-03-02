@@ -288,6 +288,7 @@ describe('Test RFC Examples', function () {
         "objectclass": "person",
         "cn": "testRoLetterß",
         "sn": "RoLetterß",
+        "jap": "こんにちは",
         "description": "All special Ro letters: äÄöÖüÜß"
       }
     });

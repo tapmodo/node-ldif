@@ -1,5 +1,5 @@
 {
-  "name": "ldif",
+  "name": "ldif-hufsm",
   "version": "0.6.0",
   "description": "LDIF (LDAP Directory Interchange Format) tools for Node",
   "main": "index.js",

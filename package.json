@@ -18,5 +18,9 @@
     "url": "https://github.com/tapmodo/node-ldif.git"
   },
   "author": "Tapmodo <khallman@tapmodo.com>",
+  "maintainers": [
+    "Cosmin Ghitea",
+    "Philipp Tusch"
+  ],
   "license": "MIT"
 }

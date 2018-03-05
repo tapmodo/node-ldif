@@ -1,6 +1,6 @@
 # ldapjs Changelog
 
-## 0.6.0
+## 0.6.1
 
 - Add a Changelog File and change the name of library
 

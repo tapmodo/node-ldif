@@ -1,0 +1,3 @@
+dn: cn=manfred,ou=people,o=panzerknackerag
+street: Steegerstrasse 17
+crypto: {"key":"Its magic, joel"}

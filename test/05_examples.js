@@ -2,9 +2,17 @@ var should = require('chai').should();
 var ldif = require('../index');
 var ex = [];
 
-describe('Parses RFC Examples',function(){
+describe('Parses RFC Examples', function () {
 
-  it('parse example1',function(done){
+  it('parse example0', function (done) {
+    var out = ldif.parseFile('./rfc/example0.ldif');
+    out.should.be.instanceof(ldif.Container);
+    out.type.should.be.equal('content');
+    ex.push(out);
+    done();
+  });
+
+  it('parse example1', function (done) {
     var out = ldif.parseFile('./rfc/example1.ldif');
     out.should.be.instanceof(ldif.Container);
     out.type.should.be.equal('content');
@@ -12,7 +20,7 @@ describe('Parses RFC Examples',function(){
     done();
   });
 
-  it('parse example2',function(done){
+  it('parse example2', function (done) {
     var out = ldif.parseFile('./rfc/example2.ldif');
     out.should.be.instanceof(ldif.Container);
     out.type.should.be.equal('content');
@@ -20,7 +28,7 @@ describe('Parses RFC Examples',function(){
     done();
   });
 
-  it('parse example3',function(done){
+  it('parse example3', function (done) {
     var out = ldif.parseFile('./rfc/example3.ldif');
     out.should.be.instanceof(ldif.Container);
     out.type.should.be.equal('content');
@@ -28,7 +36,7 @@ describe('Parses RFC Examples',function(){
     done();
   });
 
-  it('parse example4',function(done){
+  it('parse example4', function (done) {
     var out = ldif.parseFile('./rfc/example4.ldif');
     out.should.be.instanceof(ldif.Container);
     out.type.should.be.equal('content');
@@ -36,7 +44,7 @@ describe('Parses RFC Examples',function(){
     done();
   });
 
-  it('parse example5',function(done){
+  it('parse example5', function (done) {
     var out = ldif.parseFile('./rfc/example5.ldif');
     out.should.be.instanceof(ldif.Container);
     out.type.should.be.equal('content');
@@ -44,7 +52,7 @@ describe('Parses RFC Examples',function(){
     done();
   });
 
-  it('parse example6',function(done){
+  it('parse example6', function (done) {
     var out = ldif.parseFile('./rfc/example6.ldif');
     out.should.be.instanceof(ldif.Container);
     out.type.should.be.equal('changes');
@@ -52,7 +60,7 @@ describe('Parses RFC Examples',function(){
     done();
   });
 
-  it('parse example7',function(done){
+  it('parse example7', function (done) {
     var out = ldif.parseFile('./rfc/example7.ldif');
     out.should.be.instanceof(ldif.Container);
     out.type.should.be.equal('changes');
@@ -60,11 +68,52 @@ describe('Parses RFC Examples',function(){
     done();
   });
 
+  it('parse example8', function (done) {
+    var out = ldif.parseFile('./rfc/example8.ldif');
+    out.should.be.instanceof(ldif.Container);
+    out.type.should.be.equal('content');
+    ex.push(out);
+    done();
+  });
+
+  it('parse example9', function (done) {
+    var out = ldif.parseFile('./rfc/example9.ldif');
+    out.should.be.instanceof(ldif.Container);
+    out.type.should.be.equal('content');
+    ex.push(out);
+    done();
+  });
+
+
+  it('parse example10', function (done) {
+    var out = ldif.parseFile('./rfc/example10.ldif');
+    out.should.be.instanceof(ldif.Container);
+    out.type.should.be.equal('content');
+    ex.push(out);
+    done();
+  });
+
 });
 
-describe('Test RFC Examples',function(){
-  it('test example1',function(done){
+describe('Test RFC Examples', function () {
+  it('test example0', function (done) {
     var out = ex[0];
+    out.should.have.property('entries');
+    out.entries.should.be.length(1);
+    out.shift().toObject().should.be.deep.equal({
+      "dn": "",
+      "attributes": {
+        "objectclass": [
+          "top",
+          "OpenLDAProotDSE",
+        ],
+      }
+    });
+    done();
+  });
+
+  it('test example1', function (done) {
+    var out = ex[1];
     out.should.have.property('entries');
     out.entries.should.be.length(2);
     out.shift().toObject().should.be.deep.equal({
@@ -102,8 +151,8 @@ describe('Test RFC Examples',function(){
     done();
   });
 
-  it('test example2',function(done){
-    var out = ex[1];
+  it('test example2', function (done) {
+    var out = ex[2];
     out.should.have.property('entries');
     out.entries.should.be.length(1);
     out.shift().toObject().should.be.deep.equal({
@@ -122,7 +171,7 @@ describe('Test RFC Examples',function(){
         "sn": "Jensen",
         "uid": "bjensen",
         "telephonenumber": "+1 408 555 1212",
-        "description": "Babs is a big sailing fan, and travels extensively "+
+        "description": "Babs is a big sailing fan, and travels extensively " +
           "in search of perfect sailing conditions.",
         "title": "Product Manager, Rod and Reel Division"
       }
@@ -130,8 +179,8 @@ describe('Test RFC Examples',function(){
     done();
   });
 
-  it('test example3',function(done){
-    var out = ex[2];
+  it('test example3', function (done) {
+    var out = ex[3];
     out.should.have.property('entries');
     out.entries.should.be.length(1);
     out.shift().toObject().should.be.deep.equal({
@@ -149,16 +198,16 @@ describe('Test RFC Examples',function(){
         "sn": "Jensen",
         "uid": "gernj",
         "telephonenumber": "+1 408 555 1212",
-        "description": "What a careful reader you are!  This value "+
-          "is base-64-encoded because it has a control character in "+
+        "description": "What a careful reader you are!  This value " +
+          "is base-64-encoded because it has a control character in " +
           "it (a CR).\r  By the way, you should really get out more."
       }
     });
     done();
   });
 
-  it('test example4',function(done){
-    var out = ex[3];
+  it('test example4', function (done) {
+    var out = ex[4];
     out.should.have.property('entries');
     out.entries.should.be.length(2);
     out.shift().toObject().should.be.deep.equal({
@@ -213,5 +262,50 @@ describe('Test RFC Examples',function(){
   it('test example6');
   it('test example7');
 
-});
+  it('test example8', function (done) {
+    var out = ex[8];
+    out.should.have.property('entries');
+    out.entries.should.be.length(1);
+    out.shift().toObject().should.be.deep.equal({
+      "dn": "cn=testRoLetterș",
+      "attributes": {
+        "objectclass": "person",
+        "cn": "testRoLetterș",
+        "sn": "RoLetterș",
+        "description": "All special Ro letters: ÂăÎîȘșȚț"
+      }
+    });
+    done();
+  });
 
+  it('test example9', function (done) {
+    var out = ex[9];
+    out.should.have.property('entries');
+    out.entries.should.be.length(1);
+    out.shift().toObject().should.be.deep.equal({
+      "dn": "cn=testDeLetterß",
+      "attributes": {
+        "objectclass": "person",
+        "cn": "testRoLetterß",
+        "sn": "RoLetterß",
+        "jap": "こんにちは",
+        "description": "All special Ro letters: äÄöÖüÜß"
+      }
+    });
+    done();
+  });
+
+  it('test example10', function (done) {
+    var out = ex[10];
+    out.should.have.property('entries');
+    out.entries.should.be.length(1);
+    out.shift().toObject().should.be.deep.equal({
+      "dn": "cn=manfred,ou=people,o=panzerknackerag",
+      "attributes": {
+        "street": "Steegerstrasse 17",
+        "crypto": "{\"key\":\"Its magic, joel\"}",
+      }
+    });
+    done();
+  });
+});

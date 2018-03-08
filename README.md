@@ -1,8 +1,6 @@
 # node-ldif
 #### Nodejs LDIF (LDAP Data Interchange Format) parser based on [RFC2849](https://github.com/tapmodo/node-ldif/tree/master/rfc)
 
-[![Build Status](https://travis-ci.org/tapmodo/node-ldif.svg?branch=master)](https://travis-ci.org/tapmodo/node-ldif)
-
 Unless you are an LDAP aficionado you may not know about the LDIF format.
 I was surprised to learn that no LDIF parsing library existed for node. So
 I wrote one, with [peg.js](http://pegjs.org).
@@ -14,10 +12,11 @@ Now I'll never have to use that cursed perl script again!
   * 100% RFC-compliance; should comprehend any valid LDIF file
   * Parsed records stored internally intact
   * Methods are provided to extract record data in various formats
-  * Outputs exactly compatilble LDIF for any parsed record or file
+  * Outputs exactly compatible LDIF for any parsed record or file
   * Automatic decoding and outputting of base64 data
   * No external library dependencies; pure Node Javascript
   * Includes complete test suite
+  * The library can parse special language characters 
 
 ## Usage
 

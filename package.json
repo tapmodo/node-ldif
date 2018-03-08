@@ -1,6 +1,6 @@
 {
-  "name": "ldif",
-  "version": "0.5.1",
+  "name": "ldif-hufsm",
+  "version": "0.6.1",
   "description": "LDIF (LDAP Directory Interchange Format) tools for Node",
   "main": "index.js",
   "dependencies": {},
@@ -18,5 +18,9 @@
     "url": "https://github.com/tapmodo/node-ldif.git"
   },
   "author": "Tapmodo <khallman@tapmodo.com>",
+  "maintainers": [
+    "Cosmin Ghitea",
+    "Philipp Tusch"
+  ],
   "license": "MIT"
 }

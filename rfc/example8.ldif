@@ -1,0 +1,5 @@
+dn: cn=testRoLetterș
+objectclass: person
+cn: testRoLetterș
+sn: RoLetterș
+description: All special Ro letters: ÂăÎîȘșȚț

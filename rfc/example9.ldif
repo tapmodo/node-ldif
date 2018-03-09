@@ -1,0 +1,6 @@
+dn: cn=testDeLetterß
+objectclass: person
+cn: testRoLetterß
+sn: RoLetterß
+jap: こんにちは
+description: All special Ro letters: äÄöÖüÜß

@@ -14,10 +14,11 @@ Now I'll never have to use that cursed perl script again!
   * 100% RFC-compliance; should comprehend any valid LDIF file
   * Parsed records stored internally intact
   * Methods are provided to extract record data in various formats
-  * Outputs exactly compatilble LDIF for any parsed record or file
+  * Outputs exactly compatible LDIF for any parsed record or file
   * Automatic decoding and outputting of base64 data
   * No external library dependencies; pure Node Javascript
   * Includes complete test suite
+  * The library can parse special language characters 
 
 ## Usage
 

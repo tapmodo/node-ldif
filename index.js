@@ -18,6 +18,6 @@ module.exports = {
   Change: type.Change,
   Attribute: type.Attribute,
   Value: type.Value,
-  Modification: type.Modifcation,
+  Modification: type.Modification,
   _extend: type._extend
 };

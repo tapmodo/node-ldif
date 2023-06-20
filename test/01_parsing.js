@@ -59,6 +59,17 @@ describe('Basic parsing',function(){
     done();
   });
 
+  it('empty dn',function(done){
+    // This is a fix for Issue #5 on github
+    var parsed = ldif.parse(
+      'dn: dc=test\n' +
+      '\n' +
+      'dn: dc=test2\n'
+    );
+    parsed.should.have.property('entries').and.have.length(2);
+    done();
+  });
+
 });
 describe('Records',function(){
 

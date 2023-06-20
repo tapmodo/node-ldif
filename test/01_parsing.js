@@ -70,6 +70,15 @@ describe('Basic parsing',function(){
     done();
   });
 
+  it.only('empty attribute',function(done){
+    var parsed = ldif.parse(
+      'dn: dc=test\n' +
+      'member: \n'
+    );
+    parsed.should.have.property('entries').and.have.length(1);
+    done();
+  });
+
 });
 describe('Records',function(){
 
